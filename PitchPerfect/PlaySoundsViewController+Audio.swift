@@ -38,8 +38,8 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         do {
             audioFile = try AVAudioFile(forReading: recordedAudioUrl as URL)
         } catch {
-            showAlert(Alerts.AudioFileError, message: String(describing: error))
-        }        
+            BasicAlert(title: Alerts.AudioFileError, message: String(describing: error)).show(in: self)
+        }
     }
     
     func playSound(rate: Float? = nil, pitch: Float? = nil, echo: Bool = false, reverb: Bool = false) {
@@ -106,7 +106,7 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         do {
             try audioEngine.start()
         } catch {
-            showAlert(Alerts.AudioEngineError, message: String(describing: error))
+            BasicAlert(title: Alerts.AudioEngineError, message: String(describing: error)).show(in: self)
             return
         }
         
@@ -160,11 +160,5 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         vaderButton.isEnabled = enabled
         echoButton.isEnabled = enabled
         reverbButton.isEnabled = enabled
-    }
-
-    func showAlert(_ title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: Alerts.DismissAlert, style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
 }
